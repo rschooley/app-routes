@@ -1,28 +1,39 @@
+
 //
 // primary
 //
 
-// really just and alias for defaults, could use named path mapping
-function match (app, path, to) {
-    var controller  = {},
-        to          = parseTo(to);
+var routes = function (baseDir) {
+    this.baseDir = baseDir;
+    
+    // really just an alias for defaults, could use named path mapping
+    function match (app, path, to) {
+        var controller  = {},
+            to          = parseTo(to);
 
-    controller = createController(to.resource);
-    defaultActions(app, controller, path);
-}
+        controller = createController(to.resource);
+        defaultActions(app, controller, path);
+    }
 
-function resources (app, resource) {
-    var controller = createController(resource);
+    function resources (app, resource) {
+        var controller = createController(resource);
 
-    defaultActions(app, controller, resource);
-}
+        defaultActions(app, controller, resource);
+    }
 
-function root (app, to) {
-    var controller  = {},
-        to          = parseTo(to);
+    function root (app, to) {
+        var controller  = {},
+            to          = parseTo(to);
 
-    controller = createController(to.resource);
-    app.get('/', controller[to.action || 'index']);
+        controller = createController(to.resource);
+        app.get('/', controller[to.action || 'index']);
+    }
+
+    return {
+        match: match,
+        resources: resources,
+        root: root
+    }
 }
 
 //
@@ -34,7 +45,7 @@ function createController (resource) {
         controller  = {};
 
     try {
-        Controller = require('../controllers/' + resource + '-controller.js'),
+        Controller = require(routes.baseDir + '/controllers/' + resource + '-controller.js'),
         controller = new Controller();
     }
     catch (err) {
@@ -91,6 +102,4 @@ function parseTo (to) {
 // module exports
 // 
 
-exports.match = match;
-exports.resources = resources;
-exports.root = root;
+module.exports = routes;

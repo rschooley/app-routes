@@ -3,8 +3,10 @@
 // primary
 //
 
-var routes = function (baseDir) {
-    this.baseDir = baseDir;
+var baseDir = '';
+
+var routes = function (dir) {
+    baseDir = dir;
     
     // really just an alias for defaults, could use named path mapping
     function match (app, path, to) {
@@ -45,7 +47,7 @@ function createController (resource) {
         controller  = {};
 
     try {
-        Controller = require(routes.baseDir + '/controllers/' + resource + '-controller.js'),
+        Controller = require(baseDir + '/../controllers/' + resource + '-controller.js'),
         controller = new Controller();
     }
     catch (err) {

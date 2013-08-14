@@ -8,13 +8,12 @@ var baseDir = '';
 var routes = function (dir) {
     baseDir = dir;
     
-    // really just an alias for defaults, could use named path mapping
-    function match (app, path, to) {
+    function match (app, verb, path, to) {
         var controller  = {},
             to          = parseTo(to);
 
         controller = createController(to.resource);
-        defaultActions(app, controller, path);
+        customAction(app, verb, controller[to.action], path);
     }
 
     function resources (app, resource) {
@@ -56,6 +55,13 @@ function createController (resource) {
     }
 
     return controller;
+}
+
+function customAction (app, verb, action, path) {
+    if (!action)    return;
+    if (!app[verb]) return;
+
+    app[verb]('/' + path,               action              || notFoundAction);
 }
 
 function defaultActions (app, controller, resource) {

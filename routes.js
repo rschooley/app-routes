@@ -74,16 +74,12 @@ function defaultActions (app, controller, resource) {
     app.del('/' + resource + '/:id',    controller.destroy  || notFoundAction);
 }
 
-function notFoundAction (req, res) {
-    res.format({
-        html: function () {
-            res.send(404);
-        },
-        json: function () {
-            res.json(404);
-        }
-    });
-};
+function notFoundAction (req, res, next) {
+    var err = new Error('Could not locate resource');
+    err.statusCode = 404;
+
+    next(err);
+}
 
 function parseTo (to) {
     var parsed = {};

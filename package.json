@@ -1,8 +1,7 @@
 {
     "name": "app-routes", 
     "version": "0.0.1", 
-    "dependencies": {
-    },
+    "dependencies": { },
     "devDependencies": {
         "mocha": "*",
         "should": "*"
@@ -10,5 +9,8 @@
     "engines": {
         "node": "*"
     },
-    "main": "./routes.js"
+    "main": "./routes.js",
+	"scripts": {
+		"test":"mocha tests"
+	}
 }

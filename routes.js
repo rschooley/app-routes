@@ -3,10 +3,23 @@
 // primary
 //
 
-var baseDir = '';
+var baseDir = '',
+    defOpts = {
+    controllerDir: '/../controllers/',
+    fileExtension: '-controller.js',
+};
 
-var routes = function (dir) {
+function extendOpts(opts) {
+    for (var k in opts) {
+       defOpts[k] = opts[k];    
+    };
+    return defOpts;
+}
+
+var routes = function (dir, opts) {
     baseDir = dir;
+
+    extendOpts(opts);
     
     function match (app, verb, path, to) {
         var controller  = {},
@@ -46,7 +59,7 @@ function createController (resource) {
         controller  = {};
 
     try {
-        Controller = require(baseDir + '/../controllers/' + resource + '-controller.js'),
+        Controller = require(baseDir + defOpts.controllerDir + resource + defOpts.fileExtension),
         controller = new Controller();
     }
     catch (err) {
@@ -61,7 +74,9 @@ function customAction (app, verb, action, path) {
     if (!action)    return;
     if (!app[verb]) return;
 
-    app[verb]('/' + path,               action              || notFoundAction);
+	path = path[0] == '/' ? path : '/'+path;
+
+    app[verb](path,               action              || notFoundAction);
 }
 
 function defaultActions (app, controller, resource) {

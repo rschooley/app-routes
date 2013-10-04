@@ -7,7 +7,7 @@ var baseDir = '';
 
 var routes = function (dir) {
     baseDir = dir;
-    
+
     function match (app, verb, path, to) {
         var controller  = {},
             to          = parseTo(to);
@@ -46,7 +46,7 @@ function createController (resource) {
         controller  = {};
 
     try {
-        Controller = require(baseDir + '/../controllers/' + resource + '-controller.js'),
+        Controller = require(baseDir + '/controllers/' + resource + '.js'),
         controller = new Controller();
     }
     catch (err) {
@@ -67,11 +67,11 @@ function customAction (app, verb, action, path) {
 function defaultActions (app, controller, resource) {
     if (!controller) return;
 
-    app.get('/' + resource,             controller.index    || notFoundAction);
-    app.get('/' + resource + '/:id',    controller.show     || notFoundAction);
-    app.post('/' + resource,            controller.create   || notFoundAction);
-    app.put('/' + resource + '/:id',    controller.update   || notFoundAction);
-    app.del('/' + resource + '/:id',    controller.destroy  || notFoundAction);
+    app.get('/'  + resource,             controller.index    || notFoundAction);
+    app.get('/'  + resource + '/:id',    controller.show     || notFoundAction);
+    app.post('/' + resource,             controller.create   || notFoundAction);
+    app.put('/'  + resource + '/:id',    controller.update   || notFoundAction);
+    app.del('/'  + resource + '/:id',    controller.destroy  || notFoundAction);
 }
 
 function notFoundAction (req, res, next) {
@@ -99,11 +99,11 @@ function parseTo (to) {
         };
     }
 
-    return parsed; 
+    return parsed;
 }
 
 //
 // module exports
-// 
+//
 
 module.exports = routes;

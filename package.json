@@ -1,6 +1,6 @@
 {
-    "name": "app-routes", 
-    "version": "0.0.1", 
+    "name": "app-routes",
+    "version": "0.0.2",
     "dependencies": {
     },
     "devDependencies": {

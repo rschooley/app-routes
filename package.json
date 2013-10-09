@@ -1,7 +1,7 @@
 {
     "name": "app-routes",
     "description" : "An internal lib used for mapping Express controllers->routes in Rails-esque REST practices",
-    "version": "0.1.0",
+    "version": "0.1.1",
     "author" : "Robert Schooley",
     "contributors" : [
         "Stephen Rivas Jr <me@stephenrivasjr.com>"

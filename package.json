@@ -1,6 +1,16 @@
 {
     "name": "app-routes",
-    "version": "0.0.2",
+    "description" : "An internal lib used for mapping Express controllers->routes in Rails-esque REST practices",
+    "version": "0.1.0",
+    "author" : "Robert Schooley",
+    "contributors" : [
+        "Stephen Rivas Jr <me@stephenrivasjr.com>"
+    ],
+    "repository" : {
+        "type" : "git",
+        "url" : "https://github.com/sprjr/app-routes"
+    },
+    "bugs" : "https://github.com/sprjr/app-routes/issues",
     "dependencies": {
     },
     "devDependencies": {

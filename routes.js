@@ -16,10 +16,10 @@ var routes = function (dir) {
         customAction(app, verb, controller[to.action], path);
     }
 
-    function resources (app, resource) {
+    function resources (app, resource, middleware) {
         var controller = createController(resource);
 
-        defaultActions(app, controller, resource);
+        defaultActions(app, controller, resource, middleware);
     }
 
     function root (app, to) {
@@ -64,14 +64,42 @@ function customAction (app, verb, action, path) {
     app[verb]('/' + path,               action              || notFoundAction);
 }
 
-function defaultActions (app, controller, resource) {
+function defaultActions (controller, resource, middleware) {
     if (!controller) return;
 
-    app.get('/'  + resource,             controller.index    || notFoundAction);
-    app.get('/'  + resource + '/:id',    controller.show     || notFoundAction);
-    app.post('/' + resource,             controller.create   || notFoundAction);
-    app.put('/'  + resource + '/:id',    controller.update   || notFoundAction);
-    app.del('/'  + resource + '/:id',    controller.destroy  || notFoundAction);
+    var path        = '/'  + resource,
+        pathWithId  = path + '/:id';
+
+    var indexAction         = controller.index || null,
+        showAction          = controller.show || null,
+        createAction        = controller.create || null,
+        updateAction        = controller.update || null,
+        destroyAction       = controller.destroy || null;
+
+    if (indexAction) {
+        if (middleware && typeof middleware === 'function') indexAction = [middleware, indexAction];
+        app.get(path, indexAction);
+    }
+
+    if (showAction) {
+        if (middleware && typeof middleware === 'function') showAction = [middleware, showAction];
+        app.get(pathWithId, showAction);
+    }
+
+    if (createAction) {
+        if (middleware && typeof middleware === 'function') createAction = [middleware, createAction];
+        app.post(path, createAction);
+    }
+
+    if (updateAction) {
+        if (middleware && typeof middleware === 'function') updateAction = [middleware, updateAction];
+        app.put(pathWithId, updateAction);
+    }
+
+    if (destroyAction) {
+        if (middleware && typeof middleware === 'function') destroyAction = [middleware, destroyAction];
+        app.del(pathWithId, destroyAction);
+    }
 }
 
 function notFoundAction (req, res, next) {

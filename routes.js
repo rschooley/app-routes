@@ -64,7 +64,7 @@ function customAction (app, verb, action, path) {
     app[verb]('/' + path,               action              || notFoundAction);
 }
 
-function defaultActions (controller, resource, middleware) {
+function defaultActions (app, controller, resource, middleware) {
     if (!controller) return;
 
     var path        = '/'  + resource,

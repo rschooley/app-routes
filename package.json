@@ -1,6 +1,16 @@
 {
-    "name": "app-routes", 
-    "version": "0.0.1", 
+    "name": "t-route",
+    "description" : "An internal lib used @Thuzi for mapping Express controllers->routes in Rails-esque REST practices",
+    "version": "0.1.1",
+    "author" : "Robert Schooley <rschooley@thuzi.com> (https://github.com/rschooley)",
+    "contributors" : [
+        "Stephen Rivas Jr <me@stephenrivasjr.com> (http://stephenrivasjr.com)"
+    ],
+    "repository" : {
+        "type" : "git",
+        "url" : "https://github.com/sprjr/app-routes"
+    },
+    "bugs" : "https://github.com/sprjr/app-routes/issues",
     "dependencies": {
     },
     "devDependencies": {
@@ -10,5 +20,5 @@
     "engines": {
         "node": "*"
     },
-    "main": "./routes.js"
+    "main": "./lib/routes.js"
 }

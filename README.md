@@ -6,6 +6,7 @@ Route mapping kinda like Rails
 ### install
 ``` bash
 npm install app-routes
+```
 
 ### config/routes.js file
 ``` javascript

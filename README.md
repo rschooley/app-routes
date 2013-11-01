@@ -67,10 +67,6 @@ var fooController = {
     }
 };
 
-//
-// helpers
-//
-
 function authorize (req, res, next) {
     // find user by some token/cookie/header
     if (!cool) {
@@ -94,9 +90,5 @@ function fooParams (req) {
     return _.pick(req.body, 'bar', 'baz');
 };
 
-//
-// exports
-//
-
-module.exports = feebackController;
+module.exports = fooController;
 ```

@@ -3,6 +3,9 @@ app-routes
 
 Route mapping kinda like Rails
 
+### install
+``` npm install app-routes
+
 ### config/routes.js file
 ``` javascript
 var appRoutes   = require('app-routes')(__dirname),
@@ -69,7 +72,7 @@ var fooController = {
 function authorize (req, res, next) {
     // find user by some token/cookie/header
     if (!cool) {
-        return next(new Error('not cool'))''
+        return next(new Error('not cool'));
     }
 
     next();

@@ -1,6 +1,7 @@
 {
-    "name": "app-routes", 
-    "version": "0.0.1", 
+    "name": "app-routes",
+    "version": "0.1.0",
+    "main": "./routes.js"
     "dependencies": {
     },
     "devDependencies": {
@@ -10,5 +11,19 @@
     "engines": {
         "node": "*"
     },
-    "main": "./routes.js"
+    "author": {
+        "name" : "Robert Schooley",
+        "email": "robert.schooley@gmail.com"
+    },
+    "bugs": "https://github.com/rschooley/app-routes/issues",
+    "description": "Convention based routes with before action/filter for express.js",
+    "homepage": "https://github.com/rschooley/app-routes",
+    "keywords": [ "routing", "controllers", "action filters", "make it like rails" ],
+    "license": "MIT",
+    "os": [ "darwin", "linux" ],
+    "private": false,
+    "repository": {
+        "type" : "git",
+        "url" : "https://github.com/rschooley/app-routes.git"
+    }
 }

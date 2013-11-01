@@ -27,7 +27,9 @@ module.exports = routes;
 
 ### web.js (app.js, server.js)
 ``` javascript
-var routes = require('./config/routes');
+var express         = require('express'),
+    app             = express(),
+    routes          = require('./config/routes');
 ...
 routes.draw(app);
 ```

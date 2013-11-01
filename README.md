@@ -4,7 +4,8 @@ app-routes
 Route mapping kinda like Rails
 
 ### install
-``` npm install app-routes
+``` bash
+npm install app-routes
 
 ### config/routes.js file
 ``` javascript

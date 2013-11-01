@@ -7,7 +7,7 @@ var baseDir = '';
 
 var routes = function (dir) {
     baseDir = dir;
-    
+
     function match (app, verb, path, to) {
         var controller  = {},
             to          = parseTo(to);
@@ -19,6 +19,7 @@ var routes = function (dir) {
     function resources (app, resource) {
         var controller = createController(resource);
 
+        beforeActions(app, controller, resource);
         defaultActions(app, controller, resource);
     }
 
@@ -46,8 +47,14 @@ function createController (resource) {
         controller  = {};
 
     try {
-        Controller = require(baseDir + '/../controllers/' + resource + '-controller.js'),
-        controller = new Controller();
+        Controller = require(baseDir + '/../controllers/' + resource + '-controller.js');
+
+        if (typeof(Controller) === 'function') {
+            controller = new Controller();
+        }
+        else {
+            controller = Controller;
+        }
     }
     catch (err) {
         controller = null;
@@ -62,6 +69,33 @@ function customAction (app, verb, action, path) {
     if (!app[verb]) return;
 
     app[verb]('/' + path,               action              || notFoundAction);
+}
+
+function beforeActions (app, controller, resource) {
+    if (!controller) return;
+    if (!controller.beforeActions) return;
+    if (!controller.beforeActions.length) return;
+
+    controller.beforeActions.forEach(function (beforeAction) {
+        if (!beforeAction.only) {
+            app.get('/' + resource,             beforeAction.filter);
+            app.get('/' + resource + '/:id',    beforeAction.filter);
+            app.post('/' + resource,            beforeAction.filter);
+            app.put('/' + resource + '/:id',    beforeAction.filter);
+            app.del('/' + resource + '/:id',    beforeAction.filter);
+        }
+        else if (beforeAction.only) {
+            if (beforeAction.only.indexOf('show') > -1) {
+                app.get('/' + resource + '/:id',    beforeAction.filter);
+            }
+            else if (beforeAction.only.indexOf('update') > -1) {
+                app.put('/' + resource + '/:id',    beforeAction.filter);
+            }
+            else if (beforeAction.only.indexOf('destroy') > -1) {
+                app.del('/' + resource + '/:id',    beforeAction.filter);
+            }
+        }
+    });
 }
 
 function defaultActions (app, controller, resource) {
@@ -99,11 +133,11 @@ function parseTo (to) {
         };
     }
 
-    return parsed; 
+    return parsed;
 }
 
 //
 // module exports
-// 
+//
 
 module.exports = routes;

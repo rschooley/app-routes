@@ -88,10 +88,12 @@ function beforeActions (app, controller, resource) {
             if (beforeAction.only.indexOf('show') > -1) {
                 app.get('/' + resource + '/:id',    beforeAction.filter);
             }
-            else if (beforeAction.only.indexOf('update') > -1) {
+
+            if (beforeAction.only.indexOf('update') > -1) {
                 app.put('/' + resource + '/:id',    beforeAction.filter);
             }
-            else if (beforeAction.only.indexOf('destroy') > -1) {
+
+            if (beforeAction.only.indexOf('destroy') > -1) {
                 app.del('/' + resource + '/:id',    beforeAction.filter);
             }
         }

@@ -97,8 +97,16 @@ function beforeActions (app, controller, resource) {
             app.del('/' + resource + '/:id',    beforeAction.filter);
         }
         else if (beforeAction.only) {
+            if (beforeAction.only.indexOf('index') > -1) {
+                app.get('/' + resource,             beforeAction.filter);
+            }
+
             if (beforeAction.only.indexOf('show') > -1) {
                 app.get('/' + resource + '/:id',    beforeAction.filter);
+            }
+
+            if (beforeAction.only.indexOf('create') > -1) {
+                app.post('/' + resource,             beforeAction.filter);
             }
 
             if (beforeAction.only.indexOf('update') > -1) {

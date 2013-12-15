@@ -40,6 +40,18 @@ var routes = function (dir) {
             to          = parseTo(to);
 
         controller = createController(to.resource);
+
+        if (controller.beforeActions) {
+            controller.beforeActions.forEach(function (beforeAction) {
+                if (!beforeAction.only) {
+                    app.get('/', beforeAction.filter);
+                }
+                else if (beforeAction.only.indexOf(to.action) > -1) {
+                    app.get('/', beforeAction.filter);
+                }
+            });
+        }
+
         app.get('/', controller[to.action || 'index']);
     }
 
